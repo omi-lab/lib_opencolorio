@@ -4,29 +4,29 @@ TEMPLATE = lib
 DEFINES += LIB_OPENCOLORIO_LIBRARY
 
 # Private INCLUDEPATHS
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/utils
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/pystring
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/apphelpers
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/md5
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/transforms
-
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/cdl
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/exponent
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/lut1d
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/lut3d
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gamma
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/reference
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingprimary
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/matrix
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/noop
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingtone
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/log
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/fixedfunction
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/exposurecontrast
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/range
-RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingrgbcurve
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/utils
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/pystring
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/apphelpers
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/md5
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/transforms
+#
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/cdl
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/exponent
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/lut1d
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/lut3d
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gamma
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/reference
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingprimary
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/matrix
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/noop
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingtone
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/log
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/fixedfunction
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/exposurecontrast
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/range
+# RELATIVE_SYSTEM_INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingrgbcurve
 
 HEADERS += inc/OpenColorIO/OpenColorABI.h
 HEADERS += inc/OpenColorIO/OpenColorAppHelpers.h
