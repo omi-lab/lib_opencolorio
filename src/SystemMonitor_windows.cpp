@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 // Copyright Contributors to the OpenColorIO Project.
 
-
+#ifdef TP_WIN32
 #if !defined(_WIN32)
 
 #error The file is for the Windows platform only.
@@ -98,3 +98,5 @@ void SystemMonitorsImpl::getAllMonitors()
 
 
 } // namespace OCIO_NAMESPACE
+
+#endif
