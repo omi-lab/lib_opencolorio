@@ -2,6 +2,7 @@
 // Copyright Contributors to the OpenColorIO Project.
 
 
+#ifdef TP_OSX
 #if !defined(__APPLE__)
 
 #error The file is for the macOS platform only.
@@ -222,3 +223,5 @@ void SystemMonitorsImpl::getAllMonitors()
 }
 
 } // namespace OCIO_NAMESPACE
+
+#endif
