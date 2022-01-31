@@ -157,7 +157,7 @@ void ParseNumber(const char * str, size_t startPos, size_t endPos, T & value)
 
     const char * startParse = str + startPos;
 
-    double val = 0.0f;
+    double val = 0.0;
 
     size_t adjustedStartPos = startPos;
     size_t adjustedEndPos = endPos;
@@ -166,7 +166,7 @@ void ParseNumber(const char * str, size_t startPos, size_t endPos, T & value)
 
     const auto result = NumberUtils::from_chars(startParse + adjustedStartPos, startParse + adjustedEndPos, val);
 
-    value = (T)val;
+    value = T(val);
 
     if (result.ec == std::errc::invalid_argument)
     {

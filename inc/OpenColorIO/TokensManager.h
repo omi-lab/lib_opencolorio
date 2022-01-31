@@ -83,7 +83,7 @@ public:
 
     const char * getToken(int index) const noexcept
     {
-        if (index<0 || index >= (int)m_tokens.size()) return nullptr;
+        if (index<0 || index >= int(m_tokens.size())) return nullptr;
 
         return m_tokens[index].c_str();
     }

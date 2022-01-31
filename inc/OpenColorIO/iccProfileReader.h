@@ -98,7 +98,7 @@ namespace SampleICC
 
     void Swap64Array(void *pVoid, icInt32Number num)
     {
-        icUInt8Number *ptr = (icUInt8Number*)pVoid;
+        icUInt8Number *ptr = static_cast<icUInt8Number*>(pVoid);
 
         while (num > 0)
         {
@@ -113,7 +113,7 @@ namespace SampleICC
 
     void Swap32Array(void *pVoid, icInt32Number num)
     {
-        icUInt8Number *ptr = (icUInt8Number*)pVoid;
+        icUInt8Number *ptr = static_cast<icUInt8Number*>(pVoid);
 
         while (num > 0)
         {
@@ -126,7 +126,7 @@ namespace SampleICC
 
     void Swap16Array(void *pVoid, icInt32Number num)
     {
-        icUInt8Number *ptr = (icUInt8Number*)pVoid;
+        icUInt8Number *ptr = static_cast<icUInt8Number*>(pVoid);
 
         while (num > 0)
         {
@@ -138,21 +138,21 @@ namespace SampleICC
 
     float icFtoD(icS15Fixed16Number num)
     {
-        return (float)((double)num / 65536.0);
+        return float(double(num) / 65536.0);
     }
 
-    icInt32Number Read8(std::istream & istream, void *pBuf, icInt32Number num)
+    icInt32Number Read8(std::istream & istream, const void *pBuf, icInt32Number num)
     {
         if (!istream.good())
             return 0;
 
-        char * pBufChar = (char *)pBuf;
+        char * pBufChar = const_cast<char*>(static_cast<const char*>(pBuf));
         istream.read(pBufChar, num);
 
         if (!istream.good())
             return 0;
 
-        return (icInt32Number)num;
+        return icInt32Number(num);
     }
 
     icInt32Number Read64(std::istream & istream, void * pBuf64, icInt32Number num)
@@ -181,7 +181,7 @@ namespace SampleICC
 
     icInt32Number Read16Float(std::istream & istream, void *pBufFloat, icInt32Number num)
     {
-        float * ptr = (float*)pBufFloat;
+        float * ptr = static_cast<float*>(pBufFloat);
         icUInt16Number tmp;
         icInt32Number i;
 
@@ -190,7 +190,7 @@ namespace SampleICC
             if (Read16(istream, &tmp, 1) != 1)
                 break;
 
-            *ptr = (float)((float)tmp / 65535.0f);
+            *ptr = float(tmp) / 65535.0f;
             ptr++;
         }
 
@@ -261,7 +261,7 @@ namespace SampleICC
                 mText.resize(textSize + 1);
 
                 // Completed with '\0' if the string is smaller than the expected size.
-                const icUInt32Number readTextSize = Read8(istream, (void*)mText.c_str(), textSize);
+                const icUInt32Number readTextSize = Read8(istream, static_cast<const void*>(mText.c_str()), textSize);
                 if (readTextSize != textSize) 
                 {
                     mText.clear();
@@ -366,7 +366,7 @@ namespace SampleICC
                 std::vector<icUInt16Number> unicodeStr(nNumChar, 0);
 
                 // Completed with '\0' if the string is smaller than the expected size.
-                const icUInt32Number readTextSize = Read16(istream, (void*)&unicodeStr[0], nNumChar);
+                const icUInt32Number readTextSize = Read16(istream, static_cast<void*>(&unicodeStr[0]), nNumChar);
                 if (readTextSize != nNumChar)
                 {
                     return false;
@@ -455,7 +455,7 @@ namespace SampleICC
                 || !istream.good())
                 return false;
 
-            icUInt32Number sizeComp = (icUInt32Number)((size - 2 * sizeof(icUInt32Number)) / sizeof(icXYZNumber));
+            icUInt32Number sizeComp = icUInt32Number((size - 2 * sizeof(icUInt32Number)) / sizeof(icXYZNumber));
 
             // only used to read single XYZ
             if (sizeComp != 1)
@@ -465,9 +465,9 @@ namespace SampleICC
             if (!Read32(istream, &res, 1))
                 return false;
 
-            icUInt32Number num32 = (icUInt32Number)(sizeComp * sizeof(icXYZNumber) / sizeof(icUInt32Number));
+            icUInt32Number num32 = icUInt32Number(sizeComp * sizeof(icXYZNumber) / sizeof(icUInt32Number));
 
-            if ((icUInt32Number)Read32(istream, &mXYZ, num32) != num32)
+            if (icUInt32Number(Read32(istream, &mXYZ, num32)) != num32)
                 return false;
 
             return true;
@@ -502,7 +502,7 @@ namespace SampleICC
             icUInt16Number res16;
             icUInt32Number res32;
 
-            icUInt32Number nHdrSize = (icUInt32Number)(
+            icUInt32Number nHdrSize = icUInt32Number(
                 sizeof(icTagTypeSignature) +
                 sizeof(icUInt32Number) +
                 2 * sizeof(icUInt16Number));
@@ -527,7 +527,7 @@ namespace SampleICC
             }
 
             if (!mnNumParam) {
-                mnNumParam = (icUInt16Number)((size - nHdrSize) / sizeof(icS15Fixed16Number));
+                mnNumParam = icUInt16Number((size - nHdrSize) / sizeof(icS15Fixed16Number));
                 mParam = new icS15Fixed16Number[mnNumParam];
             }
 
@@ -588,7 +588,7 @@ namespace SampleICC
 
             if (sizeData)
             {
-                if (sizeData != (icUInt32Number)Read16Float(istream, &(mCurve[0]), sizeData))
+                if (sizeData != icUInt32Number(Read16Float(istream, &(mCurve[0]), sizeData)))
                     return false;
             }
 
