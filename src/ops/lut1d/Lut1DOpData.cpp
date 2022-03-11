@@ -169,7 +169,7 @@ bool Lut1DOpData::Lut3by1DArray::isIdentity(HalfFlags halfFlags) const
             {
                 const float err = values[channel + row] - aim;
 
-                if (fabs(err) > abs_tol)
+                if (std::fabs(err) > abs_tol)
                 {
                     return false;
                 }

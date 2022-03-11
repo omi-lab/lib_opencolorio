@@ -220,7 +220,7 @@ bool IsIdentity(const std::vector<int> & rawshaper, BitDepth outBitDepth)
 
     for (unsigned int i = 0; i < dim; ++i)
     {
-        if (fabs(float(i) * stepValue - float(rawshaper[i])) >= 2.0f)
+        if (std::fabs(float(i) * stepValue - float(rawshaper[i])) >= 2.0f)
         {
             return false;
         }

@@ -368,7 +368,7 @@ void Renderer_ACES_RedMod03_Inv::apply(const void * inImg, void * outImg, long n
             const float b = red - f_H * (m_pivot + minChan) * m_1minusScale;
             const float c = f_H * m_pivot * minChan * m_1minusScale;
 
-            const float newRed = ( -b - sqrt( b * b - 4.f * a * c)) / ( 2.f * a);
+            const float newRed = ( -b - std::sqrt( b * b - 4.f * a * c)) / ( 2.f * a);
 
             // Restore hue.
             if (grn >= blu) // red >= grn >= blu
@@ -471,7 +471,7 @@ void Renderer_ACES_RedMod10_Inv::apply(const void * inImg, void * outImg, long n
             const float c = f_H * m_pivot * minChan * m_1minusScale;
 
             // TODO: Replace sqrt with faster approx. (also in RedMod03 above).
-            red = ( -b - sqrt( b * b - 4.f * a * c)) / ( 2.f * a);
+            red = ( -b - std::sqrt( b * b - 4.f * a * c)) / ( 2.f * a);
         }
 
         out[0] = red;
@@ -497,7 +497,7 @@ __inline float rgbToYC(const float red, const float grn, const float blu)
 {
     // Convert RGB to YC (luma + chroma factor).
     const float YCRadiusWeight = 1.75f;
-    const float chroma = sqrt( blu*(blu-grn) + grn*(grn-red) + red*(red-blu) );
+    const float chroma = std::sqrt( blu*(blu-grn) + grn*(grn-red) + red*(red-blu) );
     const float YC = (blu + grn + red + YCRadiusWeight * chroma) / 3.f;
     return YC;
 }
