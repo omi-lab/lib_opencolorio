@@ -18,7 +18,7 @@ class CDLParser::Impl
 {
 public:
     Impl() = delete;
-    explicit Impl(const std::string & fileName);
+    explicit Impl(const std::string & filename);
     Impl(const Impl &) = delete;
     Impl & operator=(const Impl &) = delete;
 
@@ -154,15 +154,15 @@ private:
     XmlReaderElementStack m_elms;
     CDLParsingInfoRcPtr m_parsingInfo;
     unsigned int m_lineNumber;
-    std::string m_fileName;
+    std::string m_filename;
     bool m_isCC;
     bool m_isCCC;
 };
 
-CDLParser::Impl::Impl(const std::string & fileName)
+CDLParser::Impl::Impl(const std::string & filename)
     : m_parser(XML_ParserCreate(NULL))
     , m_lineNumber(0)
-    , m_fileName(fileName)
+    , m_filename(filename)
     , m_isCC(false)
     , m_isCCC(false)
 {
@@ -232,7 +232,7 @@ void CDLParser::Impl::throwMessage(const std::string & error) const
         os << CDL_TAG_COLOR_DECISION_LIST;
     }
     os << " (";
-    os << m_fileName.c_str() << "). ";
+    os << m_filename.c_str() << "). ";
     os << "Error is: " << error.c_str();
     os << ". At line (" << m_lineNumber << ")";
     throw Exception(os.str().c_str());
@@ -355,7 +355,7 @@ unsigned int CDLParser::Impl::getXmlLocation() const
 const std::string& CDLParser::Impl::getXmlFilename() const
 {
     static const std::string emptyName("File name not specified");
-    return m_fileName.empty() ? emptyName : m_fileName;
+    return m_filename.empty() ? emptyName : m_filename;
 }
 
 void CDLParser::Impl::reset()
@@ -368,7 +368,7 @@ void CDLParser::Impl::reset()
     m_elms.clear();
 
     m_lineNumber = 0;
-    m_fileName = "";
+    m_filename = "";
     m_isCC = false;
     m_isCCC = false;
 }

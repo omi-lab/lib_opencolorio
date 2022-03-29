@@ -168,15 +168,15 @@ public:
     // of input file at which error occurred.
     static int IMLutGet(
         std::istream & istream,
-        const std::string & fileName,
+        const std::string & filename,
         IMLutStruct **lut, int & line, std::string & errorLine);
 
     // Determines the bitdepth of a LUT given it's filename Searches for
     // the first occurrence of the "to" sequence of characters in the
-    // LutFileName string and then parses the numeric characters.
+    // LutFilename string and then parses the numeric characters.
     // This function is useful for figuring out the target bitdepth
     // of resizing LUT if the filename is an indicator of this
-    static IM_LutBitsPerChannel IMLutGetBitDepthFromFileName(const std::string & fileName);
+    static IM_LutBitsPerChannel IMLutGetBitDepthFromFilename(const std::string & filename);
 
     // Get maximum value in the table based on the bit depth
     static float GetMax(IM_LutBitsPerChannel lutBitDepth);
@@ -365,7 +365,7 @@ static bool FindNonComment(
 // of input file at which error occurred.
 int Lut1dUtils::IMLutGet(
     std::istream & istream,
-    const std::string & fileName,
+    const std::string & filename,
     IMLutStruct **plut,
     int & line,
     std::string & errorLine)
@@ -489,7 +489,7 @@ int Lut1dUtils::IMLutGet(
 
     if (depthScaled == IM_LUT_UNKNOWN_BITS_PERCHANNEL)
     {
-        depthScaled = IMLutGetBitDepthFromFileName(fileName.c_str());
+        depthScaled = IMLutGetBitDepthFromFilename(filename.c_str());
     }
 
     if (IM_LUT_UNKNOWN_BITS_PERCHANNEL != depthScaled)
@@ -516,19 +516,19 @@ load_abort:
 
 // Parses the filename and attempts to determine the bitdepth
 // of the LUT
-Lut1dUtils::IM_LutBitsPerChannel Lut1dUtils::IMLutGetBitDepthFromFileName(const std::string & fileName)
+Lut1dUtils::IM_LutBitsPerChannel Lut1dUtils::IMLutGetBitDepthFromFilename(const std::string & filename)
 {
-    if (fileName.empty())
+    if (filename.empty())
     {
         return IM_LUT_UNKNOWN_BITS_PERCHANNEL;
     }
 
-    std::string lowerFileName(StringUtils::Lower(fileName));
+    std::string lowerFilename(StringUtils::Lower(filename));
 
     // Get the export depth from the LUT name.  Look for a bit depth
     // after the "to" string. (ex: 12to10log).
     const char* tokenStr;
-    if ((tokenStr = std::strstr(lowerFileName.c_str(), "to")))
+    if ((tokenStr = std::strstr(lowerFilename.c_str(), "to")))
     {
         // Skip the "to";
         tokenStr += 2;
@@ -642,7 +642,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -672,12 +672,12 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     Lut1dUtils::IMLutStruct *discreetLut1d = 0x0;
     int errline;
     std::string errorLine;
-    std::string root, extension, fileName;
+    std::string root, extension, filename;
     pystring::os::path::splitext(root, extension, filePath);
-    fileName = pystring::os::path::basename(root);
+    filename = pystring::os::path::basename(root);
 
     const int status = Lut1dUtils::IMLutGet(istream,
-                                            fileName,
+                                            filename,
                                             &discreetLut1d,
                                             errline,
                                             errorLine);

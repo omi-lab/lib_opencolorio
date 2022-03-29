@@ -60,7 +60,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -85,7 +85,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & /* fileName unused */,
+                                      const std::string & /* filename unused */,
                                       Interpolation interp) const
 {
     // this shouldn't happen

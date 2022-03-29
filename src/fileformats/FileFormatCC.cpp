@@ -49,7 +49,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void write(const ConstConfigRcPtr & config,
@@ -79,12 +79,12 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 // Raise an exception if it can't be loaded.
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation /*interp*/) const
 {
     LocalCachedFileRcPtr cachedFile = LocalCachedFileRcPtr(new LocalCachedFile());
     
-    CDLParser parser(fileName);
+    CDLParser parser(filename);
     try
     {
         parser.parse(istream);
@@ -101,7 +101,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     if (!parser.isCC())
     {
         std::ostringstream os;
-        os << "File '" << fileName << "' is not a .cc file.";
+        os << "File '" << filename << "' is not a .cc file.";
         throw Exception(os.str().c_str());
     }
 

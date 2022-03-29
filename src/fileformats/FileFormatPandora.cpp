@@ -43,7 +43,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -55,19 +55,19 @@ public:
 
 private:
     static void ThrowErrorMessage(const std::string & error,
-        const std::string & fileName,
+        const std::string & filename,
         int line,
         const std::string & lineContent);
 };
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-    const std::string & fileName,
+    const std::string & filename,
     int line,
     const std::string & lineContent)
 {
     std::ostringstream os;
     os << "Error parsing Pandora LUT file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     if (-1 != line)
     {
@@ -95,7 +95,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
     // this shouldn't happen
@@ -139,7 +139,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                     ThrowErrorMessage(
                         "Only 3D LUTs are currently supported "
                         "(channel: 3d).",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -152,7 +152,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed 'in' tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -167,7 +167,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed 'out' tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -180,7 +180,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                     ThrowErrorMessage(
                         "Only LUTs are currently supported "
                         "(format: lut).",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -195,7 +195,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                     ThrowErrorMessage(
                         "Only rgb LUTs are currently supported "
                         "(values: red green blue).",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -208,7 +208,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Expected to find 4 integers.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -229,21 +229,21 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         os << lutEdgeLen*lutEdgeLen*lutEdgeLen << ".";
         ThrowErrorMessage(
             os.str().c_str(),
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     if(lutEdgeLen*lutEdgeLen*lutEdgeLen == 0)
     {
         ThrowErrorMessage(
             "No 3D LUT entries found.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     if(outputBitDepthMaxValue <= 0)
     {
         ThrowErrorMessage(
             "A valid 'out' tag was not found.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     LocalCachedFileRcPtr cachedFile = LocalCachedFileRcPtr(new LocalCachedFile());

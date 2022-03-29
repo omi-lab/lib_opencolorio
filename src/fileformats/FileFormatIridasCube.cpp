@@ -95,7 +95,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -111,19 +111,19 @@ public:
 							  
 private:
     static void ThrowErrorMessage(const std::string & error,
-                                    const std::string & fileName,
+                                    const std::string & filename,
                                     int line,
                                     const std::string & lineContent);
 };
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-                                        const std::string & fileName,
+                                        const std::string & filename,
                                         int line,
                                         const std::string & lineContent)
 {
     std::ostringstream os;
     os << "Error parsing Iridas .cube file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     if (-1 != line)
     {
@@ -146,7 +146,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 
 CachedFileRcPtr
 LocalFileFormat::read(std::istream & istream,
-                      const std::string & fileName,
+                      const std::string & filename,
                       Interpolation interp) const
 {
     // this shouldn't happen
@@ -194,7 +194,7 @@ LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_1D_SIZE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -206,7 +206,7 @@ LocalFileFormat::read(std::istream & istream,
             {
                 ThrowErrorMessage(
                     "Unsupported tag: 'LUT_2D_SIZE'.",
-                    fileName,
+                    filename,
                     lineNumber,
                     line);
             }
@@ -219,7 +219,7 @@ LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_3D_SIZE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -237,7 +237,7 @@ LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed DOMAIN_MIN tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -251,7 +251,7 @@ LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed DOMAIN_MAX tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -264,7 +264,7 @@ LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed color triples specified.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -291,7 +291,7 @@ LocalFileFormat::read(std::istream & istream,
             os << ", expected " << size1d << ".";
             ThrowErrorMessage(
                 os.str().c_str(),
-                fileName, -1, "");
+                filename, -1, "");
         }
 
         // Reformat 1D data
@@ -329,7 +329,7 @@ LocalFileFormat::read(std::istream & istream,
             os << size3d * size3d * size3d << ".";
             ThrowErrorMessage(
                 os.str().c_str(),
-                fileName, -1, "");
+                filename, -1, "");
         }
 
         // Reformat 3D data
@@ -347,7 +347,7 @@ LocalFileFormat::read(std::istream & istream,
     {
         ThrowErrorMessage(
             "LUT type (1D/3D) unspecified.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     return cachedFile;

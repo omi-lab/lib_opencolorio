@@ -58,7 +58,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -87,7 +87,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 // Raise an exception if it can't be loaded.
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & /*fileName*/,
+                                      const std::string & /*filename*/,
                                       Interpolation interp) const
 {
     // Parse Header Info.

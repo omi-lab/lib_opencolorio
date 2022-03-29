@@ -43,7 +43,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -64,7 +64,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation /*interp*/) const
 {
 
@@ -90,7 +90,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spimtx file (";
-        os << fileName << "). ";
+        os << filename << "). ";
         os << "File must contain 12 float entries. ";
         os << lineParts.size() << " found.";
         throw Exception(os.str().c_str());
@@ -102,7 +102,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spimtx file (";
-        os << fileName << "). ";
+        os << filename << "). ";
         os << "File must contain all float entries. ";
         throw Exception(os.str().c_str());
     }

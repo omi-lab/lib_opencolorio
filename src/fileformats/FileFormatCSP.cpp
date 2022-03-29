@@ -321,7 +321,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -357,7 +357,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
     Lut1DOpDataRcPtr lut1d_ptr;
@@ -370,7 +370,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     if (!notEmpty)
     {
         std::ostringstream os;
-        os << "File " << fileName;
+        os << "File " << filename;
         os << ": file stream empty when trying to read csp LUT.";
         throw Exception(os.str().c_str());
     }
@@ -378,7 +378,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     if (!startswithU(line, "CSPLUTV100"))
     {
         std::ostringstream os;
-        os << "File " << fileName << " doesn't seem to be a csp LUT, ";
+        os << "File " << filename << " doesn't seem to be a csp LUT, ";
         os << "expected 'CSPLUTV100'. First line: '" << line << "'.";
         throw Exception(os.str().c_str());
     }
@@ -389,7 +389,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Unsupported CSP LUT type. Require 1D or 3D. ";
-        os << "Found, '" << line << "' in " << fileName << ".";
+        os << "Found, '" << line << "' in " << filename << ".";
         throw Exception(os.str().c_str());
     }
     std::string csptype = line;
@@ -428,7 +428,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         {
             std::ostringstream os;
             os << "Prelut does not specify valid dimension size on channel '";
-            os << c << ": '" << line << "' in " << fileName << ".";
+            os << c << ": '" << line << "' in " << filename << ".";
             throw Exception(os.str().c_str());
         }
 
@@ -449,7 +449,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 os << "Prelut does not specify the expected number of data points. ";
                 os << "Expected: " << cpoints << ".";
                 os << "Found: " << inputparts.size() << ", " << outputparts.size() << ".";
-                os << " In " << fileName << ".";
+                os << " In " << filename << ".";
                 throw Exception(os.str().c_str());
             }
 
@@ -458,7 +458,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 std::ostringstream os;
                 os << "Prelut data is malformed, cannot convert to float array.";
-                os << " In " << fileName << ".";
+                os << " In " << filename << ".";
                 throw Exception(os.str().c_str());
             }
 
@@ -492,7 +492,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             std::ostringstream os;
             os << "A csp 1D LUT with invalid number of entries (";
             os << points1D << "): " << line << " .";
-            os << " In " << fileName << ".";
+            os << " In " << filename << ".";
             throw Exception(os.str().c_str());
         }
 
@@ -519,7 +519,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 os << "Malformed 1D csp LUT. Each line of LUT values ";
                 os << "must contain three numbers. Line: '";
                 os << line << "'. File: ";
-                os << fileName << ".";
+                os << filename << ".";
                 throw Exception(os.str().c_str());
             }
 
@@ -546,7 +546,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             std::ostringstream os;
             os << "Malformed 3D csp in LUT file, couldn't read cube size. '";
             os << line << "'. In file: ";
-            os << fileName << ".";
+            os << filename << ".";
             throw Exception(os.str().c_str());
         }
 
@@ -565,7 +565,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         {
             std::ostringstream os;
             os << "A csp 3D LUT with invalid cube size (";
-            os << lutSize << "): " << line << "' in " << fileName << ".";
+            os << lutSize << "): " << line << "' in " << filename << ".";
             throw Exception(os.str().c_str());
         }
 
@@ -601,7 +601,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 std::ostringstream os;
                 os << "Malformed 3D csp LUT, couldn't read cube row (";
-                os << i << "): " << line << "' in " << fileName << ".";
+                os << i << "): " << line << "' in " << filename << ".";
                 throw Exception(os.str().c_str());
             }
 

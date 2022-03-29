@@ -53,7 +53,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -74,7 +74,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
     const int MAX_LINE_SIZE = 4096;
@@ -86,7 +86,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spi3d file (";
-        os << fileName;
+        os << filename;
         os << ").  ";
         os << "LUT does not appear to be valid spilut format. ";
         os << "Expected 'SPILUT'.  Found: '" << lineBuffer << "'.";
@@ -103,7 +103,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spi3d file (";
-        os << fileName;
+        os << filename;
         os << "). ";
         os << "Error while reading LUT size. Found: '";
         os << lineBuffer << "'.";
@@ -115,7 +115,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spi3d file (";
-        os << fileName;
+        os << filename;
         os << "). ";
         os << "LUT size should be the same for all components. Found: '";
         os << lineBuffer << "'.";
@@ -169,7 +169,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 std::ostringstream os;
                 os << "Error parsing .spi3d file (";
-                os << fileName;
+                os << filename;
                 os << "). ";
                 os << "Data is invalid. ";
                 os << "A color value is specified (";
@@ -200,7 +200,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 std::ostringstream os;
                 os << "Error parsing .spi3d file (";
-                os << fileName;
+                os << filename;
                 os << "). ";
                 os << "Data is invalid. ";
                 os << "A LUT entry is specified (";
@@ -221,7 +221,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 std::ostringstream os;
                 os << "Error parsing .spi3d file (";
-                os << fileName;
+                os << filename;
                 os << "). ";
                 os << "Data is invalid. ";
                 os << "A LUT entry is specified multiple times (";
@@ -237,7 +237,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         std::ostringstream os;
         os << "Error parsing .spi3d file (";
-        os << fileName;
+        os << filename;
         os << "). ";
         os << "Not enough entries found.";
         throw Exception(os.str().c_str());

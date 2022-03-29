@@ -121,7 +121,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -167,16 +167,16 @@ public:
     XMLParserHelper() = delete;
     XMLParserHelper(const XMLParserHelper &) = delete;
 
-    explicit XMLParserHelper(const std::string & fileName)
+    explicit XMLParserHelper(const std::string & filename)
         : m_parser(XML_ParserCreate(nullptr))
-        , m_fileName(fileName)
+        , m_filename(filename)
     {
         XML_SetUserData(m_parser, this);
         XML_SetElementHandler(m_parser, StartElementHandler, EndElementHandler);
         XML_SetCharacterDataHandler(m_parser, CharacterDataHandler);
 
         std::string root, extension;
-        pystring::os::path::splitext(root, extension, m_fileName);
+        pystring::os::path::splitext(root, extension, m_filename);
         m_isCLF = StringUtils::Lower(extension) == ".clf";
     }
 
@@ -318,7 +318,7 @@ private:
     {
         std::ostringstream os;
         os << "Error parsing CTF/CLF file (";
-        os << m_fileName.c_str() << "). ";
+        os << m_filename.c_str() << "). ";
         os << "Error is: " << error.c_str();
         os << ". At line (" << m_lineNumber << ")";
         throw Exception(os.str().c_str());
@@ -485,7 +485,7 @@ private:
                         name,
                         pMD,
                         pImpl->m_lineNumber,
-                        pImpl->m_fileName));
+                        pImpl->m_filename));
 
                 pImpl->m_elms.back()->start(atts);
                 return;
@@ -1116,7 +1116,7 @@ private:
 
     const std::string & getXmlFilename() const
     {
-        return m_fileName;
+        return m_filename;
     }
 
     bool isCLF() const
@@ -1126,7 +1126,7 @@ private:
 
     XML_Parser m_parser;
     unsigned int m_lineNumber;
-    std::string m_fileName;
+    std::string m_filename;
     bool m_isCLF;
     XmlReaderElementStack m_elms; // Parsing stack
     CTFReaderTransformPtr m_transform;

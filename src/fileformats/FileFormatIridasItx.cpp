@@ -69,7 +69,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -85,19 +85,19 @@ public:
 
 private:
     static void ThrowErrorMessage(const std::string & error,
-        const std::string & fileName,
+        const std::string & filename,
         int line,
         const std::string & lineContent);
 };
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-    const std::string & fileName,
+    const std::string & filename,
     int line,
     const std::string & lineContent)
 {
     std::ostringstream os;
     os << "Error parsing Iridas .itx file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     if (-1 != line)
     {
@@ -119,7 +119,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
     // this shouldn't happen
@@ -159,7 +159,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_3D_SIZE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -177,7 +177,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed color triples specified.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -205,7 +205,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             os << size3d * size3d * size3d << ".";
             ThrowErrorMessage(
                 os.str().c_str(),
-                fileName, -1, "");
+                filename, -1, "");
         }
 
         // Reformat 3D data
@@ -222,7 +222,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         ThrowErrorMessage(
             "No 3D LUT found.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     return cachedFile;

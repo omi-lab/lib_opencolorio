@@ -61,11 +61,11 @@ public:
 
     // Only reads the information data of the file.
     static LocalCachedFileRcPtr ReadInfo(std::istream & istream, 
-                                         const std::string & fileName,
+                                         const std::string & filename,
                                          SampleICC::IccContent & icc);
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -81,7 +81,7 @@ public:
     }
 
 private:
-    static void ThrowErrorMessage(const std::string & error, const std::string & fileName);
+    static void ThrowErrorMessage(const std::string & error, const std::string & filename);
 };
 
 void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
@@ -104,11 +104,11 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-                                        const std::string & fileName)
+                                        const std::string & filename)
 {
     std::ostringstream os;
     os << "Error parsing .icc file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     os << error;
 
@@ -116,7 +116,7 @@ void LocalFileFormat::ThrowErrorMessage(const std::string & error,
 }
 
 LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream, 
-                                               const std::string & fileName,
+                                               const std::string & filename,
                                                SampleICC::IccContent & icc)
 {
     istream.seekg(0);
@@ -154,19 +154,19 @@ LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream,
                 != sizeof(icc.mHeader.reserved))
         )
     {
-        ThrowErrorMessage("Error loading header.", fileName);
+        ThrowErrorMessage("Error loading header.", filename);
     }
 
     if (icc.mHeader.magic != icMagicNumber)
     {
-        ThrowErrorMessage("Wrong magic number.", fileName);
+        ThrowErrorMessage("Wrong magic number.", filename);
     }
 
     icUInt32Number count, i;
 
     if (!SampleICC::Read32(istream, &count, 1))
     {
-        ThrowErrorMessage("Error loading number of tags.", fileName);
+        ThrowErrorMessage("Error loading number of tags.", filename);
     }
 
     icc.mTags.resize(count);
@@ -178,7 +178,7 @@ LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream,
             || !SampleICC::Read32(istream, &icc.mTags[i].mTagInfo.offset, 1)
             || !SampleICC::Read32(istream, &icc.mTags[i].mTagInfo.size, 1))
         {
-            ThrowErrorMessage("Error loading tag offset table from header.", fileName);
+            ThrowErrorMessage("Error loading tag offset table from header.", filename);
         }
     }
 
@@ -186,7 +186,7 @@ LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream,
     std::string error;
     if (!icc.Validate(error))
     {
-        ThrowErrorMessage(error, fileName);
+        ThrowErrorMessage(error, filename);
     }
 
     LocalCachedFileRcPtr cachedFile = LocalCachedFileRcPtr(new LocalCachedFile());
@@ -227,7 +227,7 @@ LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream,
             }
             else
             {
-                ThrowErrorMessage("The 'desc' (or 'dcsm') reader is missing.", fileName);
+                ThrowErrorMessage("The 'desc' (or 'dcsm') reader is missing.", filename);
             }
         }
     }
@@ -238,11 +238,11 @@ LocalCachedFileRcPtr LocalFileFormat::ReadInfo(std::istream & istream,
 // Try and load the format
 // Raise an exception if it can't be loaded.
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation /*interp*/) const
 {
     SampleICC::IccContent icc;
-    LocalCachedFileRcPtr cachedFile = ReadInfo(istream, fileName, icc);
+    LocalCachedFileRcPtr cachedFile = ReadInfo(istream, filename, icc);
 
     // Matrix part of the Matrix/TRC Model
     {
@@ -259,7 +259,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         if (!red || !green || !blue)
         {
             ThrowErrorMessage("Illegal matrix tag in ICC profile.",
-                fileName);
+                filename);
         }
 
         cachedFile->mMatrix44[0] =  double((*red).GetXYZ().X) / 65536.0;
@@ -289,7 +289,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     const SampleICC::IccTypeReader * blueTRC  = icc.LoadTag(istream, icSigBlueTRCTag);
     if (!redTRC || !greenTRC || !blueTRC)
     {
-        ThrowErrorMessage("Illegal curve tag in ICC profile.", fileName);
+        ThrowErrorMessage("Illegal curve tag in ICC profile.", filename);
     }
 
     static const std::string strSameType(
@@ -298,7 +298,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         if (!greenTRC->IsParametricCurve() || !blueTRC->IsParametricCurve())
         {
-            ThrowErrorMessage(strSameType, fileName);
+            ThrowErrorMessage(strSameType, filename);
         }
 
         const SampleICC::IccParametricCurveTypeReader * red =
@@ -310,7 +310,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
 
         if (!red || !green || !blue)
         {
-            ThrowErrorMessage(strSameType, fileName);
+            ThrowErrorMessage(strSameType, filename);
         }
 
         if (red->GetNumParam() != 1
@@ -319,7 +319,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         {
             ThrowErrorMessage(
                 "Expecting 1 param in parametric curve tag of ICC profile.",
-                fileName);
+                filename);
         }
 
         cachedFile->mGammaRGB[0] = SampleICC::icFtoD(red->GetParam()[0]);
@@ -331,7 +331,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         if (greenTRC->IsParametricCurve() || blueTRC->IsParametricCurve())
         {
-            ThrowErrorMessage(strSameType, fileName);
+            ThrowErrorMessage(strSameType, filename);
         }
         const SampleICC::IccCurveTypeReader * red =
             dynamic_cast<const SampleICC::IccCurveTypeReader*>(redTRC);
@@ -342,7 +342,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
 
         if (!red || !green || !blue)
         {
-            ThrowErrorMessage(strSameType, fileName);
+            ThrowErrorMessage(strSameType, filename);
         }
 
         const size_t curveSize = red->GetCurve().size();
@@ -351,13 +351,13 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         {
             ThrowErrorMessage(
                 "All curves in the ICC profile must be of the same length.",
-                fileName);
+                filename);
         }
 
         if (0 == curveSize)
         {
             ThrowErrorMessage("Curves with no values in ICC profile.",
-                fileName);
+                filename);
         }
         else if (1 == curveSize)
         {

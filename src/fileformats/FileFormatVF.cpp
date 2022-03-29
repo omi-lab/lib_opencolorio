@@ -44,7 +44,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -56,19 +56,19 @@ public:
 
 private:
     static void ThrowErrorMessage(const std::string & error,
-                                    const std::string & fileName,
+                                    const std::string & filename,
                                     int line,
                                     const std::string & lineContent);
 };
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-    const std::string & fileName,
+    const std::string & filename,
     int line,
     const std::string & lineContent)
 {
     std::ostringstream os;
     os << "Error parsing Nuke .vf file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     if (-1 != line)
     {
@@ -90,7 +90,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
     // this shouldn't happen
@@ -106,7 +106,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         !StringUtils::StartsWith(StringUtils::Lower(line), "#inventor"))
     {
         ThrowErrorMessage("Expecting '#Inventor V2.1 ascii'.",
-            fileName, lineNumber, line);
+            filename, lineNumber, line);
     }
 
     // Parse the file
@@ -142,7 +142,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                     {
                         ThrowErrorMessage(
                             "Malformed grid_size tag.",
-                            fileName, lineNumber, line);
+                            filename, lineNumber, line);
                     }
 
                     // TODO: Support nununiformly sized LUTs.
@@ -155,7 +155,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                         os << size3d[1] << " x " << size3d[2] << ".";
                         ThrowErrorMessage(
                             os.str(),
-                            fileName, lineNumber, line);
+                            filename, lineNumber, line);
                     }
 
                     raw3d.reserve(3*size3d[0]*size3d[1]*size3d[2]);
@@ -167,7 +167,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                         ThrowErrorMessage(
                             "Malformed global_transform tag. "
                             "16 floats expected.",
-                            fileName, lineNumber, line);
+                            filename, lineNumber, line);
                     }
 
                     parts.erase(parts.begin()); // Drop the 1st entry. (the tag)
@@ -176,7 +176,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                         ThrowErrorMessage(
                             "Malformed global_transform tag. "
                             "Could not convert to float array.",
-                            fileName, lineNumber, line);
+                            filename, lineNumber, line);
                     }
                 }
                 // TODO: element_size (aka scale3)
@@ -206,14 +206,14 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
         os << "Found " << raw3d.size()/3 << ", expected " << size3d[0]*size3d[1]*size3d[2] << ".";
         ThrowErrorMessage(
             os.str().c_str(),
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     if(size3d[0]*size3d[1]*size3d[2] == 0)
     {
         ThrowErrorMessage(
             "No 3D LUT entries found.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     LocalCachedFileRcPtr cachedFile = LocalCachedFileRcPtr(new LocalCachedFile());

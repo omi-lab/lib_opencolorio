@@ -204,7 +204,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -219,19 +219,19 @@ public:
                         TransformDirection dir) const override;
 private:
     static void ThrowErrorMessage(const std::string & error,
-        const std::string & fileName,
+        const std::string & filename,
         int line,
         const std::string & lineContent);
 };
 
 void LocalFileFormat::ThrowErrorMessage(const std::string & error,
-    const std::string & fileName,
+    const std::string & filename,
     int line,
     const std::string & lineContent)
 {
     std::ostringstream os;
     os << "Error parsing Resolve .cube file (";
-    os << fileName;
+    os << filename;
     os << ").  ";
     if (-1 != line)
     {
@@ -253,7 +253,7 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
 
@@ -298,7 +298,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Comments not allowed after header.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -316,7 +316,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 ThrowErrorMessage(
                     "Unsupported tag: 'TITLE'.",
-                    fileName,
+                    filename,
                     lineNumber,
                     line);
             }
@@ -327,7 +327,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_1D_SIZE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -339,7 +339,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             {
                 ThrowErrorMessage(
                     "Unsupported tag: 'LUT_2D_SIZE'.",
-                    fileName,
+                    filename,
                     lineNumber,
                     line);
             }
@@ -350,7 +350,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_3D_SIZE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -366,7 +366,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_1D_INPUT_RANGE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -379,7 +379,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed LUT_3D_INPUT_RANGE tag.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -393,7 +393,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
                 {
                     ThrowErrorMessage(
                         "Malformed color triples specified.",
-                        fileName,
+                        filename,
                         lineNumber,
                         line);
                 }
@@ -429,7 +429,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             os << ", expected " << size1d << ".";
             ThrowErrorMessage(
                 os.str().c_str(),
-                fileName, -1, "");
+                filename, -1, "");
         }
 
         // Reformat 1D data
@@ -465,7 +465,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             os << size3d * size3d * size3d << ".";
             ThrowErrorMessage(
                 os.str().c_str(),
-                fileName, -1, "");
+                filename, -1, "");
         }
 
         // Reformat 3D data
@@ -484,7 +484,7 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
     {
         ThrowErrorMessage(
             "Lut type (1D/3D) unspecified.",
-            fileName, -1, "");
+            filename, -1, "");
     }
 
     return cachedFile;

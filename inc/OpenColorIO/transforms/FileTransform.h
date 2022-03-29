@@ -60,11 +60,11 @@ public:
 
     virtual void getFormatInfo(FormatInfoVec & formatInfoVec) const = 0;
 
-    // read an istream. originalFileName is used by parsers that make use
+    // read an istream. originalFilename is used by parsers that make use
     // of aspects of the file name as part of the parsing.
     // It may be set to an empty string if not known.
     virtual CachedFileRcPtr read(std::istream & istream,
-                                 const std::string & originalFileName,
+                                 const std::string & originalFilename,
                                  Interpolation interp) const = 0;
 
     virtual void bake(const Baker & baker,

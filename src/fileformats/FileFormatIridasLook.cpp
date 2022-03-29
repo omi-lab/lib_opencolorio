@@ -135,9 +135,9 @@ public:
     XMLParserHelper(const XMLParserHelper &) = delete;
     XMLParserHelper & operator=(const XMLParserHelper &) = delete;
 
-    explicit XMLParserHelper(const std::string & fileName)
+    explicit XMLParserHelper(const std::string & filename)
         : m_parser(XML_ParserCreate(NULL))
-        , m_fileName(fileName)
+        , m_filename(filename)
         , m_ignoring(0)
         , m_inLook(false)
         , m_inLut(false)
@@ -195,7 +195,7 @@ public:
         {
             std::ostringstream os;
             os << "Error parsing Iridas Look file (";
-            os << m_fileName.c_str() << "). ";
+            os << m_filename.c_str() << "). ";
             os << "Number of characters in 'data' must be multiple of 8. ";
             os << m_lutString.size() << " elements found.";
             throw Exception(os.str().c_str());
@@ -213,7 +213,7 @@ public:
             {
                 std::ostringstream os;
                 os << "Error parsing Iridas Look file (";
-                os << m_fileName.c_str() << "). ";
+                os << m_filename.c_str() << "). ";
                 os << "Non-hex characters found in 'data' block ";
                 os << "at index '" << (8 * i) << "'.";
                 throw Exception(os.str().c_str());
@@ -225,7 +225,7 @@ public:
         {
             std::ostringstream os;
             os << "Error parsing Iridas Look file (";
-            os << m_fileName.c_str() << "). ";
+            os << m_filename.c_str() << "). ";
             os << "Incorrect number of lut3d entries. ";
             os << "Found " << lut.size() << " values, expected " << expactedVectorSize << ".";
             throw Exception(os.str().c_str());
@@ -239,7 +239,7 @@ private:
     {
         std::ostringstream os;
         os << "Error parsing Iridas Look file (";
-        os << m_fileName.c_str() << "). ";
+        os << m_filename.c_str() << "). ";
         os << "Error is: " << error.c_str();
         os << ". At line (" << m_lineNumber << ")";
         throw Exception(os.str().c_str());
@@ -452,12 +452,12 @@ private:
 
     const std::string& getXmlFilename() const
     {
-        return m_fileName;
+        return m_filename;
     }
 
     XML_Parser m_parser;
     unsigned m_lineNumber;
-    std::string m_fileName;
+    std::string m_filename;
     int m_ignoring;
     bool m_inLook;
     bool m_inLut;
@@ -488,7 +488,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void buildFileOps(OpRcPtrVec & ops,
@@ -509,10 +509,10 @@ void LocalFileFormat::getFormatInfo(FormatInfoVec & formatInfoVec) const
 }
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & fileName,
+                                      const std::string & filename,
                                       Interpolation interp) const
 {
-    XMLParserHelper parser(fileName);
+    XMLParserHelper parser(filename);
     parser.Parse(istream);
 
     // TODO: There is a LUT1D section in some .look files,

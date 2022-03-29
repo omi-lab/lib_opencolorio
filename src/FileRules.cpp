@@ -199,7 +199,7 @@ std::string ConvertToRegularExpression(const char * globPattern, bool ignoreCase
     return regexPattern;
 }
 
-std::string BuildRegularExpression(const char * filePathPattern, const char * fileNameExtension)
+std::string BuildRegularExpression(const char * filePathPattern, const char * filenameExtension)
 {
     std::string str;
     str += "^(";
@@ -221,11 +221,11 @@ std::string BuildRegularExpression(const char * filePathPattern, const char * fi
         str += ")";
     }
 
-    if (!fileNameExtension)
+    if (!filenameExtension)
     {
         throw Exception("File rules: file extension is empty.");
     }
-    else if (!*fileNameExtension)
+    else if (!*filenameExtension)
     {
         // An empty file extension is internally converted to ".*" in order to simplify
         // the user writing of the glob pattern.
@@ -234,7 +234,7 @@ std::string BuildRegularExpression(const char * filePathPattern, const char * fi
     else
     {
         str += "(\\.";
-        str += ConvertToRegularExpression(fileNameExtension, true);
+        str += ConvertToRegularExpression(filenameExtension, true);
         str += ")";
     }
 
@@ -251,7 +251,7 @@ std::string BuildRegularExpression(const char * filePathPattern, const char * fi
         oss << "File rules: invalid regular expression '"
             << str
             << "' built from pattern '" << filePathPattern
-            << " and extension '" << fileNameExtension << "': '"
+            << " and extension '" << filenameExtension << "': '"
             << ex.what()
             << "'.";
         throw Exception(oss.str().c_str());
@@ -283,9 +283,9 @@ void ValidateRegularExpression(const char * regex)
     }
 }
 
-void ValidateRegularExpression(const char * filePathPattern, const char * fileNameExtension)
+void ValidateRegularExpression(const char * filePathPattern, const char * filenameExtension)
 {
-    const std::string exp = BuildRegularExpression(filePathPattern, fileNameExtension);
+    const std::string exp = BuildRegularExpression(filePathPattern, filenameExtension);
     ValidateRegularExpression(exp.c_str());
 }
 

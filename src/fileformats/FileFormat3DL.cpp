@@ -101,7 +101,7 @@ public:
     void getFormatInfo(FormatInfoVec & formatInfoVec) const override;
 
     CachedFileRcPtr read(std::istream & istream,
-                         const std::string & fileName,
+                         const std::string & filename,
                          Interpolation interp) const override;
 
     void bake(const Baker & baker,
@@ -232,7 +232,7 @@ bool IsIdentity(const std::vector<int> & rawshaper, BitDepth outBitDepth)
 // Raise an exception if it can't be loaded.
 
 CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
-                                      const std::string & /* fileName unused */,
+                                      const std::string & /* filename unused */,
                                       Interpolation interp) const
 {
     std::vector<int> rawshaper;
