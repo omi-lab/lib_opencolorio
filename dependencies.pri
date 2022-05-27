@@ -27,3 +27,4 @@ INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/exposurecontrast
 INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/range
 INCLUDEPATHS += lib_opencolorio/inc/OpenColorIO/ops/gradingrgbcurve
 
+DEFINES += OpenColorIO_SKIP_IMPORTS
