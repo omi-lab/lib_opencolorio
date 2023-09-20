@@ -3,7 +3,7 @@ File:       icProfileHeader.h
 
 Contains:   ICC profile definitions and structures including Version 4 extensions
 
-Copyright:  © see ICC Software License
+Copyright:  (c) see ICC Software License
 
 * <b>
 * This version of the header file corresponds to the profile
@@ -80,7 +80,7 @@ memcpy(ucr_char, ucr_string, string_bytes);
 * Copyright (c) 2003-2006 The International Color Consortium.
 *
 *
-* THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+* THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESSED OR IMPLIED
 * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
 * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
 * DISCLAIMED.  IN NO EVENT SHALL THE INTERNATIONAL COLOR CONSORTIUM OR
@@ -866,7 +866,7 @@ typedef struct {
     icUInt16Number      funcType;       /* Function Type                */
                                         /* 0 = gamma only               */
     icUInt16Number      pad;            /* Padding for byte alignment   */
-    icS15Fixed16Number  gamma;          /* x°gamma                      */
+    icS15Fixed16Number  gamma;          /* x gamma                      */
                                         /* up to 7 values Y,a,b,c,d,e,f */
 } icParametricCurve;
 
@@ -875,7 +875,7 @@ typedef struct {
     icUInt16Number      funcType;       /* Function Type                */
                                         /* 0 = gamma only               */
     icUInt16Number      pad;            /* Padding for byte alignment   */
-    icS15Fixed16Number  gamma;          /* x°gamma                      */
+    icS15Fixed16Number  gamma;          /* x gamma                      */
     icS15Fixed16Number  a;              /* a                            */
     icS15Fixed16Number  b;              /* b                            */
     icS15Fixed16Number  c;              /* c                            */
