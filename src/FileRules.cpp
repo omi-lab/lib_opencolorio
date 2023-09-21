@@ -6,6 +6,7 @@
 #include <map>
 #include <regex>
 #include <sstream>
+#include <string.h>
 
 #include <OpenColorIO/OpenColorIO.h>
 
