@@ -457,8 +457,8 @@ LocalFileFormat::buildFileOps(OpRcPtrVec & ops,
         LogWarningInterpolationNotUsed(fileInterp, fileTransform);
     }
 
-    const double dmin[]{ cachedFile->domain_min[0], cachedFile->domain_min[1], cachedFile->domain_min[2] };
-    const double dmax[]{ cachedFile->domain_max[0], cachedFile->domain_max[1], cachedFile->domain_max[2] };
+    const double dmin[]{ double(cachedFile->domain_min[0]), double(cachedFile->domain_min[1]), double(cachedFile->domain_min[2]) };
+    const double dmax[]{ double(cachedFile->domain_max[0]), double(cachedFile->domain_max[1]), double(cachedFile->domain_max[2]) };
 
     switch (newDir)
     {

@@ -375,25 +375,25 @@ void MatrixOpData::MatrixArray::setRGBA(const float * values)
 {
     Values & v = getValues();
 
-    v[0] = values[0];
-    v[1] = values[1];
-    v[2] = values[2];
-    v[3] = values[3];
+    v[0] = double(values[0]);
+    v[1] = double(values[1]);
+    v[2] = double(values[2]);
+    v[3] = double(values[3]);
 
-    v[4] = values[4];
-    v[5] = values[5];
-    v[6] = values[6];
-    v[7] = values[7];
+    v[4] = double(values[4]);
+    v[5] = double(values[5]);
+    v[6] = double(values[6]);
+    v[7] = double(values[7]);
 
-    v[8] = values[8];
-    v[9] = values[9];
-    v[10] = values[10];
-    v[11] = values[11];
+    v[8] = double(values[8]);
+    v[9] = double(values[9]);
+    v[10] = double(values[10]);
+    v[11] = double(values[11]);
 
-    v[12] = values[12];
-    v[13] = values[13];
-    v[14] = values[14];
-    v[15] = values[15];
+    v[12] = double(values[12]);
+    v[13] = double(values[13]);
+    v[14] = double(values[14]);
+    v[15] = double(values[15]);
 }
 
 void MatrixOpData::MatrixArray::setRGBA(const double * values)

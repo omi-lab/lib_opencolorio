@@ -610,7 +610,7 @@ float GradingBSplineCurveImpl::KnotsCoefs::evalCurveRev(int c, float y) const
         const float C  = m_coefsArray[coefsOffs + coefsSets * 2 + i];
         const float kn = m_knotsArray[knotsOffs + i];
         const float C0 = C - y;
-        const float discrim = sqrt(B * B - 4.f * A * C0);
+        const float discrim = std::sqrt(B * B - 4.f * A * C0);
         return kn + (-2.f * C0) / (discrim + B);
     }
 }

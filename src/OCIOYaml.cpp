@@ -610,7 +610,7 @@ inline void load(const YAML::Node& node, CDLTransformRcPtr& t)
         }
         else if (key == "saturation" || key == "sat")
         {
-            double val = 0.0f;
+            double val = 0.;
             load(iter->second, val);
             t->setSat(val);
         }

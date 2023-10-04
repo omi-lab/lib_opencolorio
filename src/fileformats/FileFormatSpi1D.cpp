@@ -319,13 +319,13 @@ void LocalFileFormat::buildFileOps(OpRcPtrVec & ops,
 
     const auto newDir = CombineTransformDirections(dir, fileTransform.getDirection());
 
-    const double min[3] = { cachedFile->from_min,
-                            cachedFile->from_min,
-                            cachedFile->from_min };
+    const double min[3] = { static_cast<double>(cachedFile->from_min),
+                            static_cast<double>(cachedFile->from_min),
+                            static_cast<double>(cachedFile->from_min) };
 
-    const double max[3] = { cachedFile->from_max,
-                            cachedFile->from_max,
-                            cachedFile->from_max };
+    const double max[3] = { static_cast<double>(cachedFile->from_max),
+                            static_cast<double>(cachedFile->from_max),
+                            static_cast<double>(cachedFile->from_max) };
 
     const auto fileInterp = fileTransform.getInterpolation();
 

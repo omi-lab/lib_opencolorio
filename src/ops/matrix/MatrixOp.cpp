@@ -320,8 +320,8 @@ void CreateMinMaxOp(OpRcPtrVec & ops,
                     float from_max,
                     TransformDirection direction)
 {
-    const double min[3] = { from_min, from_min, from_min };
-    const double max[3] = { from_max, from_max, from_max };
+    const double min[3] = { double(from_min), double(from_min), double(from_min) };
+    const double max[3] = { double(from_max), double(from_max), double(from_max) };
     CreateMinMaxOp(ops, min, max, direction);
 }
 

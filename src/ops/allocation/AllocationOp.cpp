@@ -51,8 +51,8 @@ void CreateAllocationOps(OpRcPtrVec & ops,
             {
                 for(int i=0; i<3; ++i)
                 {
-                    oldmin[i] = data.vars[0];
-                    oldmax[i] = data.vars[1];
+                    oldmin[i] = double(data.vars[0]);
+                    oldmax[i] = double(data.vars[1]);
                 }
             }
 
@@ -71,8 +71,8 @@ void CreateAllocationOps(OpRcPtrVec & ops,
             {
                 for(int i=0; i<3; ++i)
                 {
-                    oldmin[i] = data.vars[0];
-                    oldmax[i] = data.vars[1];
+                    oldmin[i] = double(data.vars[0]);
+                    oldmax[i] = double(data.vars[1]);
                 }
             }
 
@@ -89,7 +89,7 @@ void CreateAllocationOps(OpRcPtrVec & ops,
             {
                 for(int i=0; i<3; ++i)
                 {
-                    linOffset[i] = data.vars[2];
+                    linOffset[i] = double(data.vars[2]);
                 }
             }
 

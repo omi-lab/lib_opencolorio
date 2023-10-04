@@ -23,7 +23,7 @@ void LogAffineTransformImpl::deleter(LogAffineTransform* t)
 }
 
 LogAffineTransformImpl::LogAffineTransformImpl()
-    : m_data(2.0f, TRANSFORM_DIR_FORWARD)
+    : m_data(2., TRANSFORM_DIR_FORWARD)
 {
 }
 

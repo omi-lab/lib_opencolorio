@@ -580,7 +580,7 @@ void RegisterAll(BuiltinTransformRegistryImpl & registry) noexcept
                 static constexpr double IN_MAX =  1.50;
                 double in = input * (IN_MAX - IN_MIN) + IN_MIN;
 
-                double out = 0.0f;
+                double out = 0.0;
 
                 if (in < ((9.72 - 15.0) / 17.52))
                 {

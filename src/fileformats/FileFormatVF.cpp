@@ -227,10 +227,10 @@ CachedFileRcPtr LocalFileFormat::read(std::istream & istream,
             global_transform[4*i+0] *= static_cast<float>(size3d[0]);
             global_transform[4*i+1] *= static_cast<float>(size3d[1]);
             global_transform[4*i+2] *= static_cast<float>(size3d[2]);
-            cachedFile->m44[4*i+0] = global_transform[4*i+0];
-            cachedFile->m44[4*i+1] = global_transform[4*i+1];
-            cachedFile->m44[4*i+2] = global_transform[4*i+2];
-            cachedFile->m44[4*i+3] = global_transform[4*i+3];
+            cachedFile->m44[4*i+0] = static_cast<double>(global_transform[4*i+0]);
+            cachedFile->m44[4*i+1] = static_cast<double>(global_transform[4*i+1]);
+            cachedFile->m44[4*i+2] = static_cast<double>(global_transform[4*i+2]);
+            cachedFile->m44[4*i+3] = static_cast<double>(global_transform[4*i+3]);
         }
 
         cachedFile->useMatrix = true;

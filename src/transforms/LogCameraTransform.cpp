@@ -24,7 +24,7 @@ void LogCameraTransformImpl::deleter(LogCameraTransform* t)
 }
 
 LogCameraTransformImpl::LogCameraTransformImpl(const double(&linSideBreakValues)[3])
-    : m_data(2.0f, TRANSFORM_DIR_FORWARD)
+    : m_data(2., TRANSFORM_DIR_FORWARD)
 {
     data().setValue(LIN_SIDE_BREAK, linSideBreakValues);
 }
